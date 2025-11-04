@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
 const path = require('path');
 const cors = require('cors');
+const shopifyService = require('./shopify-service');
 
 const app = express();
 const PORT = 3000;
@@ -11,22 +12,57 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Endpoint para generar el PDF
+// Endpoint para obtener todas las colecciones disponibles
+app.get('/api/colecciones', async (req, res) => {
+    try {
+        const colecciones = await shopifyService.obtenerColecciones();
+
+        // Filtrar y formatear colecciones relevantes
+        const coleccionesFormateadas = colecciones
+            .filter(c => c.products_count > 0) // Solo colecciones con productos
+            .map(c => ({
+                handle: c.handle,
+                title: c.title,
+                productCount: c.products_count,
+                description: c.description || ''
+            }))
+            .sort((a, b) => b.productCount - a.productCount); // Ordenar por cantidad de productos
+
+        res.json({ colecciones: coleccionesFormateadas });
+    } catch (error) {
+        console.error('Error obteniendo colecciones:', error);
+        res.status(500).json({ error: 'Error obteniendo colecciones de la tienda' });
+    }
+});
+
+// Endpoint para generar el PDF - ahora con colección dinámica
 app.get('/api/generar-catalogo', async (req, res) => {
     try {
-        console.log('Iniciando generación de catálogo PDF...');
+        const coleccion = req.query.coleccion || 'nariz'; // Default: nariz
 
-        // Leer productos
-        const productosData = await fs.readFile(
-            path.join(__dirname, 'productos_nariz_simple.json'),
-            'utf-8'
-        );
-        const productos = JSON.parse(productosData);
+        console.log(`\n${'='.repeat(60)}`);
+        console.log(`📦 Iniciando generación de catálogo PDF`);
+        console.log(`📁 Colección: ${coleccion}`);
+        console.log('='.repeat(60));
+
+        // Obtener productos desde Shopify API
+        const productos = await shopifyService.obtenerProductosParaCatalogo(coleccion);
+
+        if (productos.length === 0) {
+            return res.status(404).json({
+                error: `No se encontraron productos en la colección '${coleccion}'`
+            });
+        }
+
+        // Obtener info de la colección
+        const infoColeccion = await shopifyService.obtenerInfoColeccion(coleccion);
+        const nombreColeccion = infoColeccion?.title || coleccion.toUpperCase();
 
         // Generar HTML
-        const html = await generarHTML(productos);
+        const html = await generarHTML(productos, nombreColeccion);
 
         // Generar PDF con Puppeteer
+        console.log('🖨️  Generando PDF con Puppeteer...');
         const browser = await puppeteer.launch({
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -48,16 +84,20 @@ app.get('/api/generar-catalogo', async (req, res) => {
 
         await browser.close();
 
-        console.log('PDF generado exitosamente');
+        console.log('✅ PDF generado exitosamente\n');
 
         // Enviar PDF
+        const filename = `catalogo-infinito-${coleccion}.pdf`;
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename=catalogo-infinito-piercing-nariz.pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
         res.send(pdfBuffer);
 
     } catch (error) {
-        console.error('Error generando PDF:', error);
-        res.status(500).json({ error: 'Error generando el catálogo PDF' });
+        console.error('❌ Error generando PDF:', error);
+        res.status(500).json({
+            error: 'Error generando el catálogo PDF',
+            details: error.message
+        });
     }
 });
 
@@ -120,7 +160,7 @@ app.get('/api/test-layout', async (req, res) => {
 });
 
 // Función para generar el HTML del catálogo
-async function generarHTML(productos) {
+async function generarHTML(productos, nombreColeccion = 'PRODUCTOS') {
     // Dividir productos en grupos para paginación más creativa
     const productosPorPagina = 4; // Grid 2x2 - Productos más grandes
     const paginas = [];
@@ -142,7 +182,7 @@ async function generarHTML(productos) {
                         <div class="infinity-symbol">∞</div>
                         <h1 class="brand-name">INFINITO PIERCING</h1>
                     </div>
-                    <div class="collection-badge">COLECCIÓN NARIZ</div>
+                    <div class="collection-badge">COLECCIÓN ${nombreColeccion.toUpperCase()}</div>
                 </div>
                 <div class="header-accent"></div>
             </div>
@@ -212,7 +252,7 @@ async function generarHTML(productos) {
             <div class="cover-middle">
                 <div class="collection-title">
                     <div class="collection-line"></div>
-                    <h2>COLECCIÓN NARIZ</h2>
+                    <h2>COLECCIÓN ${nombreColeccion.toUpperCase()}</h2>
                     <div class="collection-line"></div>
                 </div>
                 <div class="collection-stats">
@@ -242,7 +282,7 @@ async function generarHTML(productos) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Catálogo Infinito Piercing - Nariz</title>
+        <title>Catálogo Infinito Piercing - ${nombreColeccion}</title>
         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
         <style>
             * {

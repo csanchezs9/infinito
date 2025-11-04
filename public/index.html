@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
             text-align: center;
         }
@@ -57,6 +57,77 @@
             line-height: 1.6;
         }
 
+        /* Selector de colecciones */
+        .collection-selector {
+            margin-bottom: 30px;
+        }
+
+        .collection-selector label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #121212;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .collection-card {
+            background: #fafafa;
+            border: 2px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .collection-card:hover {
+            border-color: #afb744;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(175, 183, 68, 0.15);
+        }
+
+        .collection-card.selected {
+            background: #afb744;
+            border-color: #afb744;
+            color: #121212;
+        }
+
+        .collection-card.selected .collection-name {
+            color: #121212;
+        }
+
+        .collection-card.selected .collection-count {
+            color: #121212;
+            opacity: 0.8;
+        }
+
+        .collection-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #121212;
+            margin-bottom: 5px;
+        }
+
+        .collection-count {
+            font-size: 13px;
+            color: #666666;
+        }
+
+        .loading-collections {
+            padding: 40px;
+            color: #666666;
+            font-size: 14px;
+        }
+
         .btn-generate {
             background: #afb744;
             color: #121212;
@@ -73,7 +144,7 @@
             box-shadow: 0 4px 12px rgba(175, 183, 68, 0.15);
         }
 
-        .btn-generate:hover {
+        .btn-generate:hover:not(:disabled) {
             background: #9ba63d;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(175, 183, 68, 0.25);
@@ -85,6 +156,10 @@
 
         .btn-generate:disabled {
             cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .btn-generate.loading {
             position: relative;
             overflow: hidden;
         }
@@ -103,37 +178,6 @@
         @keyframes loading {
             0% { left: -100%; }
             100% { left: 100%; }
-        }
-
-        .features {
-            margin-top: 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 30px;
-        }
-
-        .feature {
-            background: #fafafa;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e5e5e5;
-        }
-
-        .feature-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #121212;
-            margin-bottom: 5px;
-        }
-
-        .feature-text {
-            font-size: 14px;
-            color: #666666;
         }
 
         .status {
@@ -171,6 +215,37 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .features {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #121212;
+            margin-bottom: 5px;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            color: #666666;
         }
 
         .footer {
@@ -214,59 +289,131 @@
         <div class="subtitle">GENERADOR DE CATÁLOGO</div>
 
         <p class="description">
-            Genera un catálogo PDF profesional con todos los productos de la colección de nariz.
-            Diseño creativo con 53 productos y imágenes en alta calidad.
+            Selecciona una colección y genera un catálogo PDF profesional con todos los productos.
+            Los datos se obtienen directamente desde la tienda en tiempo real.
         </p>
 
-        <button class="btn-generate" onclick="generarPDF()">
-            GENERAR CATÁLOGO PDF
+        <!-- Selector de colecciones -->
+        <div class="collection-selector">
+            <label for="collections">Selecciona una colección:</label>
+            <div id="collections" class="collections-grid">
+                <div class="loading-collections">Cargando colecciones...</div>
+            </div>
+        </div>
+
+        <button class="btn-generate" onclick="generarPDF()" id="generateBtn" disabled>
+            SELECCIONA UNA COLECCIÓN
         </button>
 
         <div id="status" class="status"></div>
 
         <div class="features">
             <div class="feature">
-                <div class="feature-icon">📄</div>
-                <div class="feature-title">53 Productos</div>
-                <div class="feature-text">Colección completa</div>
+                <div class="feature-icon">🔄</div>
+                <div class="feature-title">Datos en Tiempo Real</div>
+                <div class="feature-text">Desde Shopify API</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📁</div>
+                <div class="feature-title">Múltiples Colecciones</div>
+                <div class="feature-text">Oreja, nariz, corporal...</div>
             </div>
             <div class="feature">
                 <div class="feature-icon">🎨</div>
-                <div class="feature-title">Diseño Único</div>
-                <div class="feature-text">Layout moderno</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📸</div>
-                <div class="feature-title">Alta Calidad</div>
-                <div class="feature-text">Imágenes HD</div>
+                <div class="feature-title">Diseño Minimalista</div>
+                <div class="feature-text">Blanco y negro</div>
             </div>
         </div>
 
         <div class="footer">
-            <p>Powered by Node.js + Express + Puppeteer</p>
+            <p>Powered by Node.js + Express + Puppeteer + Shopify API</p>
             <p><a href="https://infinitopiercing.com" target="_blank">infinitopiercing.com</a></p>
         </div>
     </div>
 
     <script>
+        let coleccionSeleccionada = null;
+
+        // Cargar colecciones al iniciar
+        async function cargarColecciones() {
+            try {
+                const response = await fetch('/api/colecciones');
+                const data = await response.json();
+
+                if (data.colecciones && data.colecciones.length > 0) {
+                    renderizarColecciones(data.colecciones);
+                } else {
+                    mostrarError('No se encontraron colecciones disponibles');
+                }
+            } catch (error) {
+                console.error('Error cargando colecciones:', error);
+                mostrarError('Error al cargar las colecciones');
+            }
+        }
+
+        function renderizarColecciones(colecciones) {
+            const container = document.getElementById('collections');
+            container.innerHTML = '';
+
+            colecciones.forEach(coleccion => {
+                const card = document.createElement('div');
+                card.className = 'collection-card';
+                card.onclick = () => seleccionarColeccion(coleccion.handle, card);
+
+                card.innerHTML = `
+                    <div class="collection-name">${coleccion.title}</div>
+                    <div class="collection-count">${coleccion.productCount} productos</div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function seleccionarColeccion(handle, cardElement) {
+            // Remover selección previa
+            document.querySelectorAll('.collection-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Seleccionar nueva colección
+            cardElement.classList.add('selected');
+            coleccionSeleccionada = handle;
+
+            // Habilitar botón
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = false;
+            btn.textContent = `GENERAR CATÁLOGO DE ${handle.toUpperCase()}`;
+        }
+
+        function mostrarError(mensaje) {
+            const container = document.getElementById('collections');
+            container.innerHTML = `<div class="loading-collections" style="color: #dc3545;">${mensaje}</div>`;
+        }
+
         async function generarPDF() {
+            if (!coleccionSeleccionada) {
+                alert('Por favor, selecciona una colección primero');
+                return;
+            }
+
             const statusEl = document.getElementById('status');
-            const btn = document.querySelector('.btn-generate');
+            const btn = document.getElementById('generateBtn');
 
             // Mostrar estado de carga
             statusEl.className = 'status loading';
-            statusEl.textContent = '⏳ Generando catálogo PDF... esto puede tardar unos segundos';
+            statusEl.textContent = `⏳ Generando catálogo de ${coleccionSeleccionada}... esto puede tardar unos segundos`;
             btn.disabled = true;
             btn.classList.add('loading');
             btn.style.opacity = '0.5';
-            btn.textContent = 'GENERANDO...';
+            btn.textContent = 'GENERANDO PDF...';
 
             try {
                 // Hacer fetch real y esperar a que termine
-                const response = await fetch('/api/generar-catalogo');
+                const response = await fetch(`/api/generar-catalogo?coleccion=${coleccionSeleccionada}`);
 
                 if (!response.ok) {
-                    throw new Error('Error al generar el PDF');
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Error al generar el PDF');
                 }
 
                 // Obtener el PDF como blob
@@ -276,7 +423,7 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'catalogo-infinito-piercing-nariz.pdf';
+                a.download = `catalogo-infinito-${coleccionSeleccionada}.pdf`;
                 document.body.appendChild(a);
                 a.click();
 
@@ -290,7 +437,7 @@
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.style.opacity = '1';
-                btn.textContent = 'GENERAR CATÁLOGO PDF';
+                btn.textContent = `GENERAR CATÁLOGO DE ${coleccionSeleccionada.toUpperCase()}`;
 
                 // Ocultar mensaje después de 5 segundos
                 setTimeout(() => {
@@ -300,11 +447,11 @@
             } catch (error) {
                 // Mostrar error
                 statusEl.className = 'status error';
-                statusEl.textContent = '✗ Error al generar el PDF. Por favor, intenta de nuevo.';
+                statusEl.textContent = `✗ ${error.message}`;
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.style.opacity = '1';
-                btn.textContent = 'GENERAR CATÁLOGO PDF';
+                btn.textContent = `GENERAR CATÁLOGO DE ${coleccionSeleccionada.toUpperCase()}`;
 
                 console.error('Error:', error);
 
@@ -315,7 +462,10 @@
             }
         }
 
-        // Verificar que el servicio está funcionando al cargar
+        // Cargar colecciones al inicio
+        cargarColecciones();
+
+        // Verificar que el servicio está funcionando
         fetch('/api/health')
             .then(res => res.json())
             .then(data => console.log('✓ Servicio funcionando:', data))
