@@ -1,7 +1,5 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
-const fs = require('fs').promises;
-const path = require('path');
 const cors = require('cors');
 const shopifyService = require('./shopify-service');
 
@@ -104,59 +102,6 @@ app.get('/api/generar-catalogo', async (req, res) => {
 // Endpoint de health check
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Servicio de catálogo PDF funcionando' });
-});
-
-// Endpoint de TEST para verificar layout con solo 2 páginas
-app.get('/api/test-layout', async (req, res) => {
-    try {
-        console.log('Generando PDF de prueba (solo 8 productos)...');
-
-        // Leer productos
-        const productosData = await fs.readFile(
-            path.join(__dirname, 'productos_nariz_simple.json'),
-            'utf-8'
-        );
-        const todosProductos = JSON.parse(productosData);
-
-        // SOLO tomar 8 productos para 2 páginas de prueba
-        const productos = todosProductos.slice(0, 8);
-
-        // Generar HTML
-        const html = await generarHTML(productos);
-
-        // Generar PDF con Puppeteer
-        const browser = await puppeteer.launch({
-            headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
-
-        const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: 'networkidle0' });
-
-        const pdfBuffer = await page.pdf({
-            format: 'A4',
-            printBackground: true,
-            margin: {
-                top: '0mm',
-                right: '0mm',
-                bottom: '0mm',
-                left: '0mm'
-            }
-        });
-
-        await browser.close();
-
-        console.log('PDF de prueba generado exitosamente');
-
-        // Enviar PDF
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename=test-layout.pdf');
-        res.send(pdfBuffer);
-
-    } catch (error) {
-        console.error('Error generando PDF de prueba:', error);
-        res.status(500).json({ error: 'Error generando el PDF de prueba' });
-    }
 });
 
 // Función para generar el HTML del catálogo
