@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const cors = require('cors');
 const shopifyService = require('./shopify-service');
+const { organizarColeccionesPorCategoria, obtenerNombreColeccion } = require('./categorias-config');
 
 const app = express();
 const PORT = 3000;
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Endpoint para obtener todas las colecciones disponibles
+// Endpoint para obtener todas las colecciones organizadas por categoría
 app.get('/api/colecciones', async (req, res) => {
     try {
         const colecciones = await shopifyService.obtenerColecciones();
@@ -20,13 +21,15 @@ app.get('/api/colecciones', async (req, res) => {
             .filter(c => c.products_count > 0) // Solo colecciones con productos
             .map(c => ({
                 handle: c.handle,
-                title: c.title,
+                title: obtenerNombreColeccion(c.handle, c.title),
                 productCount: c.products_count,
                 description: c.description || ''
-            }))
-            .sort((a, b) => b.productCount - a.productCount); // Ordenar por cantidad de productos
+            }));
 
-        res.json({ colecciones: coleccionesFormateadas });
+        // Organizar por categorías
+        const coleccionesPorCategoria = organizarColeccionesPorCategoria(coleccionesFormateadas);
+
+        res.json({ categorias: coleccionesPorCategoria });
     } catch (error) {
         console.error('Error obteniendo colecciones:', error);
         res.status(500).json({ error: 'Error obteniendo colecciones de la tienda' });
