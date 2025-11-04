@@ -1,0 +1,373 @@
+[
+  {
+    "nombre": "ARO CONTINUO BÁSICO",
+    "precio": "$25,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-continuo-basico",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_4245.png?v=1677613790",
+    "disponible": true
+  },
+  {
+    "nombre": "LABRET (TGI) AURORA",
+    "precio": "$50,000 COP",
+    "url": "https://infinitopiercing.com/products/labret-tgi-aurora",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FDSC_0031.jpg?v=1662135427",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL PLATA L",
+    "precio": "$7,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-plata-l",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/171CHISPANOSTRILPLATAL.png?v=1643319896",
+    "disponible": false
+  },
+  {
+    "nombre": "ARO NOSTRIL LISO",
+    "precio": "$12,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-nostril-liso",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_6029.png?v=1658439715",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA MINI NOSTRIL PLATA",
+    "precio": "$7,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-mini-nostril-plata",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/172CHISPAMININOSTRILPLATA.png?v=1643320065",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO NOSTRIL CRISTAL PLATA",
+    "precio": "$20,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-nostril-cristal-plata",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F272B1ARONOSTRILCRISTALPLATA.jpg?v=1709497864",
+    "disponible": false
+  },
+  {
+    "nombre": "NOSTRIL ÓPALO EN L",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-opalo-en-l",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_5895.png?v=1658436955",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER TRENZA",
+    "precio": "$25,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-trenza",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/37AROCLICKERTRENZA.png?v=1643311056",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO NOSTRIL TRENZA BALÍN",
+    "precio": "$12,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-notril-trenza-balin",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/130ARONOSTRILTRENZABALIN.png?v=1643310214",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO NOSTRIL TRENZA ZIRCONIA",
+    "precio": "$12,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-nostril-trenza-zircon",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/129ARONOSTRILTRENZAZIRCON.png?v=1643310088",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL AMANECER",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-amanecer",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F153ACHISPANOSTRILAMANECER.jpg?v=1674839625",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CONTINUO BÁSICO DELGADO",
+    "precio": "$30,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-continuo-basico-delgado",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F57D1AROCONTINUOSBASICO_4cf46797-c009-46da-a654-1c1ecdf5cfb1.jpg?v=1712525324",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL MINI FLOR BALÍN",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-mini-flor-balin",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F276B1CHISPANOSTRILMINIFLORBALIN.jpg?v=1707786426",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL TRINITY BALÍN",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-trinity-balin",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F275B1CHISPANOSTRILTRINITYBALIN.jpg?v=1707785521",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA ZIRCON NOSTRIL PLATA L",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-zircon-nostril-plata-l",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/ZIRCON.jpg?v=1701385526",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL ESTRELLA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-estrella",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F155B1CHISPANOSTRILESTRELLA.jpg?v=1675378651",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO NOSTRIL PLATA DESTELLOS",
+    "precio": "$12,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-nostril-plata-destellos",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/9ARONOSTRILPLATADESTELLOS.png?v=1643231212",
+    "disponible": false
+  },
+  {
+    "nombre": "CHISPA FLOR COLORIDA NOSTRIL PLATA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-flor-colorida-nostril-plata",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F283B1CHISPAFLORCOLORIDANOSTRILPLATA.jpg?v=1709500193",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA FLOR ZIRCON NOSTRIL PLATA L",
+    "precio": "$7,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-zircon-nostril-plata-l-1",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/FLORZIRCON.jpg?v=1701385960",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL CORAZÓN",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-corazon",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F157B2CHISPANOSTRILCORAZON.jpg?v=1675968017",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL ARIES",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-aries",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F155CHISPAB2NOSTRILARIES.jpg?v=1675109390",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL LUZ",
+    "precio": "$7,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-luz",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F154B1CHISPANOSTRILLUZ.jpg?v=1674927875",
+    "disponible": true
+  },
+  {
+    "nombre": "NOSTRIL BALÍN ACERO",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-balin-acero",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/131NOSTRILBALINACERO.png?v=1656715268",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER ZIRCONIAS FRONTALES",
+    "precio": "$40,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-zirconias-frontales",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F354A1AROCLICKERZIRCONIASFRONTALES_a4bdb47c-d6c7-4c36-9d28-c41a15bfefd0.jpg?v=1719079926",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) FLOR ZIRCONIA",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-tgi-flor-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F328A1AROCLICKER_TGI_FLORZIRCONIA.jpg?v=1716426712",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) ZIRCONIA CIELO FRONTAL",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-tgi-zirconia-cielo-frontal",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F329A1AROCLICKER_TGI_ZIRCONIACIELOFRONTAL.jpg?v=1716426661",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL MEDIO SOL",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-medio-sol",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F277B2CHISPANOSTRILMEDIOSOL.jpg?v=1709500020",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA FLOR NOSTRIL PLATA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-estrella-nostril-plata-1",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/fIMG_3483.jpg?v=1707787029",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA CRUZ NOSTRIL PLATA L",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-cruz-nostril-plata",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/CRUZ.jpg?v=1701384502",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA ESTRELLA NOSTRIL PLATA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-estrella-nostril-plata",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/estrella.jpg?v=1701383879",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (T) ZIRCONIAS",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-t-zirconias",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F2561AAROCLICKER_T_ZIRCONIAS.jpg?v=1699827155",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL COMETA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-cometa",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F161B1CHISPANOSTRILCOMETA.jpg?v=1677531529",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL BALÍN ÓPALO",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-balin-opalo",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F160A1CHISPANOSTRILBALINOPALO.jpg?v=1677359912",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL PLANO",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-plano",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F159A1CHISPANOSTRILPLANO.png?v=1677191122",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA NOSTRIL CUADRADA",
+    "precio": "$15,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-nostril-cuadrada",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F158B1CHISPANOSTRILCUADRADA.jpg?v=1676388878",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) AUBREY",
+    "precio": "$100,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-tgi-aubrey",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F151A0AROCLICKER_TGI_AUBREY.jpg?v=1671729060",
+    "disponible": true
+  },
+  {
+    "nombre": "CHISPA ORO TOP ZIRCONIA",
+    "precio": "$170,000 COP",
+    "url": "https://infinitopiercing.com/products/chispa-oro-top-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F123ACHISPAOROTOPZIRCONIA.jpg?v=1669315955",
+    "disponible": true
+  },
+  {
+    "nombre": "LABRET (TGI) IRIS",
+    "precio": "$50,000 COP",
+    "url": "https://infinitopiercing.com/products/labret-tgi-iris",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FDSC_0204.jpg?v=1663368187",
+    "disponible": true
+  },
+  {
+    "nombre": "NOSTRIL (TGI) ZIRCONIA EN L",
+    "precio": "$40,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-tgi-zirconia-en-l",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F74A2NOSTRIL_TGI_ZIRCONIAENL.jpg?v=1721261354",
+    "disponible": true
+  },
+  {
+    "nombre": "NOSTRIL (TGI) ZIRCONIA",
+    "precio": "$40,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-tgi-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FDASC_0035.jpg?v=1661358540",
+    "disponible": false
+  },
+  {
+    "nombre": "NOSTRIL (TGI) BALÍN / PLANO",
+    "precio": "$40,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-tgi-balin",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/F71B1NOSTRIL_TGI_BALIN.jpg?v=1677185523",
+    "disponible": true
+  },
+  {
+    "nombre": "NOSTRIL (TGI) TOP ZIRCONIA - OPALO",
+    "precio": "$40,000 COP",
+    "url": "https://infinitopiercing.com/products/nostril-tgi-top-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FDSC_0022.jpg?v=1660843780",
+    "disponible": true
+  },
+  {
+    "nombre": "BCR (TGI) TOP ZIRCONIA",
+    "precio": "$60,000 COP",
+    "url": "https://infinitopiercing.com/products/bcr-tgi-top-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_0385.png?v=1660327032",
+    "disponible": true
+  },
+  {
+    "nombre": "BCR (TGI) PENTA TOP ZIRCONIA",
+    "precio": "$60,000 COP",
+    "url": "https://infinitopiercing.com/products/bcr-tgi-penta-top-zirconia",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_0384.png?v=1660328237",
+    "disponible": true
+  },
+  {
+    "nombre": "BCR (TGI) TOP ÓPALO",
+    "precio": "$60,000 COP",
+    "url": "https://infinitopiercing.com/products/bcr-tgi-top-opalos",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_3792.jpg?v=1660324612",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) ZIRCONIA CIELO",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-t-zircon-cielo",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/files/F207A1AROCLICKER_TGI_ZIRCONIACIELO.jpg?v=1716425853",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) ZIRCONIAS LATERALES",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-t-zircones-laterales",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/FIMG_6648.png?v=1657647107",
+    "disponible": true
+  },
+  {
+    "nombre": "G RING (TGI)",
+    "precio": "$60,000 COP",
+    "url": "https://infinitopiercing.com/products/g-ring-t",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/30GRING_T.png?v=1656541206",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (TGI) ZIRCONIA DOBLE LÍNEA",
+    "precio": "$100,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-t-zircon-doble-linea",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/24AROCLICKER_T_ZIRCONDOBLELINEA.png?v=1652369539",
+    "disponible": true
+  },
+  {
+    "nombre": "BCR BASICOS",
+    "precio": "$5,000 COP",
+    "url": "https://infinitopiercing.com/products/bcr-basicos",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/170BCRBASICOACERO.png?v=1643335178",
+    "disponible": true
+  },
+  {
+    "nombre": "HERRADURA BASICA ACERO",
+    "precio": "$5,000 COP",
+    "url": "https://infinitopiercing.com/products/herradura-basica-acero",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/14HERRADURABASICAACERO.png?v=1643333150",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO CLICKER (T) GOTA ZIRCONIA",
+    "precio": "$80,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-clicker-t-gota-zircon",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/64AAROCLICKER_T_GOTAZIRCON.png?v=1643316743",
+    "disponible": true
+  },
+  {
+    "nombre": "ARO NOSTRIL LISO PLATA BALÍN",
+    "precio": "$12,000 COP",
+    "url": "https://infinitopiercing.com/products/aro-nostril-liso-plata-balin",
+    "imagen": "https://cdn.shopify.com/s/files/1/0613/1053/3857/products/10ARONOSTRILPLATALISOBALIN.png?v=1643231499",
+    "disponible": true
+  }
+]

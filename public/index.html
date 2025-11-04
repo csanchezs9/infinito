@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinito Piercing - Generador de Catálogo PDF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #121212;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .infinity {
+            font-size: 120px;
+            color: #afb744;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            color: #121212;
+        }
+
+        .subtitle {
+            color: #afb744;
+            font-size: 24px;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        .description {
+            color: #666666;
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn-generate {
+            background: #afb744;
+            color: #121212;
+            border: none;
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(175, 183, 68, 0.15);
+        }
+
+        .btn-generate:hover {
+            background: #9ba63d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(175, 183, 68, 0.25);
+        }
+
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        .btn-generate:disabled {
+            cursor: not-allowed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-generate.loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .features {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #121212;
+            margin-bottom: 5px;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .status {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status.loading {
+            display: block;
+            background: rgba(175, 183, 68, 0.1);
+            color: #121212;
+            animation: fadeIn 0.3s ease;
+            border: 1px solid rgba(175, 183, 68, 0.3);
+        }
+
+        .status.success {
+            display: block;
+            background: rgba(45, 183, 66, 0.1);
+            color: #2DB742;
+            animation: fadeIn 0.3s ease;
+            border: 1px solid rgba(45, 183, 66, 0.3);
+        }
+
+        .status.error {
+            display: block;
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            animation: fadeIn 0.3s ease;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            margin-top: 60px;
+            color: #999999;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #afb744;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #8a9723;
+        }
+
+        .pattern {
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 35px,
+                rgba(175, 183, 68, 0.02) 35px,
+                rgba(175, 183, 68, 0.02) 70px
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="pattern"></div>
+
+    <div class="container">
+        <div class="infinity">∞</div>
+
+        <h1>INFINITO PIERCING</h1>
+        <div class="subtitle">GENERADOR DE CATÁLOGO</div>
+
+        <p class="description">
+            Genera un catálogo PDF profesional con todos los productos de la colección de nariz.
+            Diseño creativo con 53 productos y imágenes en alta calidad.
+        </p>
+
+        <button class="btn-generate" onclick="generarPDF()">
+            GENERAR CATÁLOGO PDF
+        </button>
+
+        <div id="status" class="status"></div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📄</div>
+                <div class="feature-title">53 Productos</div>
+                <div class="feature-text">Colección completa</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-title">Diseño Único</div>
+                <div class="feature-text">Layout moderno</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📸</div>
+                <div class="feature-title">Alta Calidad</div>
+                <div class="feature-text">Imágenes HD</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Powered by Node.js + Express + Puppeteer</p>
+            <p><a href="https://infinitopiercing.com" target="_blank">infinitopiercing.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        async function generarPDF() {
+            const statusEl = document.getElementById('status');
+            const btn = document.querySelector('.btn-generate');
+
+            // Mostrar estado de carga
+            statusEl.className = 'status loading';
+            statusEl.textContent = '⏳ Generando catálogo PDF... esto puede tardar unos segundos';
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.style.opacity = '0.5';
+            btn.textContent = 'GENERANDO...';
+
+            try {
+                // Hacer fetch real y esperar a que termine
+                const response = await fetch('/api/generar-catalogo');
+
+                if (!response.ok) {
+                    throw new Error('Error al generar el PDF');
+                }
+
+                // Obtener el PDF como blob
+                const blob = await response.blob();
+
+                // Crear URL temporal para descarga
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'catalogo-infinito-piercing-nariz.pdf';
+                document.body.appendChild(a);
+                a.click();
+
+                // Limpiar
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                // Mostrar éxito
+                statusEl.className = 'status success';
+                statusEl.textContent = '✓ ¡PDF generado exitosamente! La descarga ha comenzado.';
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.style.opacity = '1';
+                btn.textContent = 'GENERAR CATÁLOGO PDF';
+
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    statusEl.className = 'status';
+                }, 5000);
+
+            } catch (error) {
+                // Mostrar error
+                statusEl.className = 'status error';
+                statusEl.textContent = '✗ Error al generar el PDF. Por favor, intenta de nuevo.';
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.style.opacity = '1';
+                btn.textContent = 'GENERAR CATÁLOGO PDF';
+
+                console.error('Error:', error);
+
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    statusEl.className = 'status';
+                }, 5000);
+            }
+        }
+
+        // Verificar que el servicio está funcionando al cargar
+        fetch('/api/health')
+            .then(res => res.json())
+            .then(data => console.log('✓ Servicio funcionando:', data))
+            .catch(err => console.error('✗ Error al conectar con el servicio:', err));
+    </script>
+</body>
+</html>
