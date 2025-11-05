@@ -25,19 +25,18 @@ async function obtenerColecciones() {
 
 /**
  * Obtiene todos los productos de una colección específica
+ * Usa paginación correcta con Link headers y elimina duplicados
  * @param {string} coleccionHandle - El handle de la colección (ej: 'nariz', 'oreja')
  * @param {number} limit - Límite de productos por página (default: 250)
  */
 async function obtenerProductosPorColeccion(coleccionHandle, limit = ITEMS_PER_PAGE) {
     try {
-        let page = 1;
         let todosLosProductos = [];
-        let hayMasProductos = true;
+        let productosUnicos = new Map(); // Usar Map para eliminar duplicados por ID
+        let url = `https://${SHOPIFY_STORE}/collections/${coleccionHandle}/products.json?limit=${limit}`;
+        let pageNum = 1;
 
-        while (hayMasProductos) {
-            const url = `https://${SHOPIFY_STORE}/collections/${coleccionHandle}/products.json?limit=${limit}&page=${page}`;
-            console.log(`Fetching: ${url}`);
-
+        while (url) {
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -48,19 +47,39 @@ async function obtenerProductosPorColeccion(coleccionHandle, limit = ITEMS_PER_P
             const productos = data.products || [];
 
             if (productos.length === 0) {
-                hayMasProductos = false;
-            } else {
-                todosLosProductos = todosLosProductos.concat(productos);
-                page++;
+                break;
+            }
 
-                // Si obtuvimos menos productos que el límite, no hay más páginas
-                if (productos.length < limit) {
-                    hayMasProductos = false;
+            // Agregar productos únicos al Map (elimina duplicados automáticamente)
+            productos.forEach(producto => {
+                productosUnicos.set(producto.id, producto);
+            });
+
+            // Buscar siguiente página en Link header
+            const linkHeader = response.headers.get('Link');
+            url = null; // Reset para próxima iteración
+
+            if (linkHeader) {
+                // Parsear Link header para encontrar rel="next"
+                const links = linkHeader.split(',');
+                for (const link of links) {
+                    const match = link.match(/<([^>]+)>;\s*rel="next"/);
+                    if (match) {
+                        url = match[1];
+                        pageNum++;
+                        break;
+                    }
                 }
+            }
+
+            // Si obtuvimos menos productos que el límite, no hay más páginas
+            if (productos.length < limit) {
+                break;
             }
         }
 
-        console.log(`✓ Total de productos obtenidos de '${coleccionHandle}': ${todosLosProductos.length}`);
+        // Convertir Map a Array
+        todosLosProductos = Array.from(productosUnicos.values());
         return todosLosProductos;
     } catch (error) {
         console.error('Error en obtenerProductosPorColeccion:', error);
@@ -120,8 +139,33 @@ function formatearPrecio(precio) {
  */
 async function obtenerInfoColeccion(coleccionHandle) {
     try {
+        // Primero intentar desde la lista de colecciones
         const colecciones = await obtenerColecciones();
-        return colecciones.find(c => c.handle === coleccionHandle);
+        const coleccionEnLista = colecciones.find(c => c.handle === coleccionHandle);
+        if (coleccionEnLista) {
+            return coleccionEnLista;
+        }
+
+        // Si no está en la lista, intentar obtenerla directamente
+        console.log(`Buscando colección oculta: ${coleccionHandle}`);
+        const url = `https://${SHOPIFY_STORE}/collections/${coleccionHandle}/products.json?limit=1`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const data = await response.json();
+        
+        // Obtener el conteo total de productos
+        const productos = await obtenerProductosPorColeccion(coleccionHandle);
+        
+        return {
+            handle: coleccionHandle,
+            title: coleccionHandle.charAt(0).toUpperCase() + coleccionHandle.slice(1),
+            products_count: productos.length,
+            description: ''
+        };
     } catch (error) {
         console.error('Error en obtenerInfoColeccion:', error);
         return null;
@@ -134,15 +178,8 @@ async function obtenerInfoColeccion(coleccionHandle) {
  */
 async function obtenerProductosParaCatalogo(coleccionHandle) {
     try {
-        console.log(`\n📦 Obteniendo productos de la colección: ${coleccionHandle}`);
-
         const productosShopify = await obtenerProductosPorColeccion(coleccionHandle);
         const productosNormalizados = normalizarProductos(productosShopify);
-
-        console.log(`✓ Productos normalizados: ${productosNormalizados.length}`);
-        console.log(`✓ Disponibles: ${productosNormalizados.filter(p => p.disponible).length}`);
-        console.log(`✓ Agotados: ${productosNormalizados.filter(p => !p.disponible).length}\n`);
-
         return productosNormalizados;
     } catch (error) {
         console.error('Error en obtenerProductosParaCatalogo:', error);

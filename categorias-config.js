@@ -12,22 +12,8 @@ const CATEGORIAS = {
             'nariz',
             'ceja',
             'bucal',
-            'corporal',
-            'intimas'
-        ]
-    },
-    'tipos-perforacion': {
-        nombre: 'Tipos de Perforación',
-        emoji: '📍',
-        colecciones: [
-            'helix',
-            'helix-1',
-            'flat',
-            'conch',
-            'forward-anti-helix',
-            'daith',
-            'industrial',
-            'expansion'
+            'corporal'
+            // Removida: intimas (vacía)
         ]
     },
     'bisuteria': {
@@ -35,20 +21,22 @@ const CATEGORIAS = {
         emoji: '💍',
         colecciones: [
             'candongas',
-            'anillos',
-            'dijens',
-            'earcuff'
+            'topos',
+            'solitarios'
+            // Removidas: anillos, collares, dijes, simuladores, tobilleras, earcuff (vacías)
         ]
     },
     'tipo-material': {
         nombre: 'Tipo de Material',
         emoji: '⚡',
         colecciones: [
-            'titanio',
+            'titanio-grado-implante',
             'acero',
+            'titanio',
+            'plata',
             'oro',
-            'covergold',
-            'esmeraldas'
+            'covergold'
+            // Removida: esmeraldas (vacía)
         ]
     },
     'tipo-joya': {
@@ -59,12 +47,12 @@ const CATEGORIAS = {
             'chispa-nostril',
             'labret',
             'barra-barbell',
-            'barbell-barra',
             'herradura',
             'bcr',
-            'expansores',
             'barra-pezon-nipple',
-            'banana-curved-barbell'
+            'banana-curved-barbell',
+            'top-microdermal'
+            // Removida: expansores (vacía)
         ]
     }
 };
@@ -130,6 +118,7 @@ const NOMBRES_COLECCIONES = {
     'bucal': 'Bucal',
     'corporal': 'Corporal',
     'intimas': 'Íntimas',
+    'intimates': 'Íntimas',
 
     // Tipos de perforación
     'helix': 'Helix',
@@ -138,19 +127,28 @@ const NOMBRES_COLECCIONES = {
     'conch': 'Conch',
     'forward-anti-helix': 'Forward Anti-helix',
     'daith': 'Daith',
+    'scapha': 'Scapha',
     'industrial': 'Industrial',
     'expansion': 'Expansión',
 
     // Bisutería
     'candongas': 'Candongas',
+    'topos': 'Topos',
     'anillos': 'Anillos',
+    'collares': 'Collares',
+    'dijes': 'Dijes',
     'dijens': 'Dijes',
+    'solitarios': 'Solitarios',
+    'simuladores': 'Simuladores',
+    'tobilleras': 'Tobilleras',
     'earcuff': 'Ear Cuff',
 
     // Materiales
+    'titanio-grado-implante': 'Titanio Grado Implante',
     'titanio': 'Titanio',
     'acero': 'Acero',
     'oro': 'Oro',
+    'plata': 'Plata',
     'covergold': 'Covergold',
     'esmeraldas': 'Esmeraldas',
 
@@ -164,7 +162,8 @@ const NOMBRES_COLECCIONES = {
     'bcr': 'BCR',
     'expansores': 'Expansores',
     'barra-pezon-nipple': 'Barra Pezón',
-    'banana-curved-barbell': 'Banana (Curved Barbell)'
+    'banana-curved-barbell': 'Banana (Curved Barbell)',
+    'top-microdermal': 'Top Microdermal'
 };
 
 function obtenerNombreColeccion(handle, titleOriginal) {
