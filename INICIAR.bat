@@ -18,13 +18,14 @@ echo.
 
 echo Iniciando aplicacion...
 echo.
-echo ✅ El servidor se cerrara automaticamente cuando cierres el navegador
-echo    (o puedes cerrar esta ventana CMD manualmente)
+echo El servidor se cerrara automaticamente cuando cierres el navegador
+echo (o puedes cerrar esta ventana CMD manualmente)
 echo.
 
-:: Intentar ejecutar el .exe primero (versión portable)
+:: Intentar ejecutar el .exe primero (version portable)
 if exist "%~dp0InfinitoCatalogo.exe" (
-    echo 📦 Ejecutando version portable (InfinitoCatalogo.exe)...
+    echo.
+    echo Ejecutando InfinitoCatalogo.exe
     echo.
     "%~dp0InfinitoCatalogo.exe"
     goto :fin
@@ -32,31 +33,33 @@ if exist "%~dp0InfinitoCatalogo.exe" (
 
 :: Si no existe el .exe, intentar con dist\InfinitoCatalogo.exe
 if exist "%~dp0dist\InfinitoCatalogo.exe" (
-    echo 📦 Ejecutando desde carpeta dist...
+    echo.
+    echo Ejecutando desde carpeta dist
     echo.
     "%~dp0dist\InfinitoCatalogo.exe"
     goto :fin
 )
 
 :: Si no existe el .exe, intentar con Node.js
-echo 💻 Ejecutando con Node.js...
+echo.
+echo Ejecutando con Node.js
 echo.
 node "%~dp0server.js"
 
-:: Si Node.js falló, mostrar error
+:: Si Node.js fallo, mostrar error
 if errorlevel 1 (
     echo.
     echo ╔════════════════════════════════════════════════════════════╗
-    echo ║  ⚠️  ERROR: No se encontro InfinitoCatalogo.exe            ║
-    echo ║             ni Node.js instalado                           ║
     echo ║                                                            ║
-    echo ║  📥 Opciones:                                              ║
+    echo ║  ERROR: No se encontro InfinitoCatalogo.exe                ║
+    echo ║         ni Node.js instalado                               ║
+    echo ║                                                            ║
+    echo ║  Opciones:                                                 ║
     echo ║                                                            ║
     echo ║  1. Asegurate de extraer TODOS los archivos del ZIP       ║
     echo ║     incluyendo InfinitoCatalogo.exe                        ║
     echo ║                                                            ║
-    echo ║  2. O instala Node.js desde:                              ║
-    echo ║     https://nodejs.org                                    ║
+    echo ║  2. O instala Node.js desde: https://nodejs.org           ║
     echo ║                                                            ║
     echo ╚════════════════════════════════════════════════════════════╝
     echo.
