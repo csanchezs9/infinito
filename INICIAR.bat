@@ -69,10 +69,12 @@ if errorlevel 1 (
 
 :fin
 
-:: Cuando el servidor se cierra (Ctrl+C)
+:: Cuando el servidor se cierra (auto o Ctrl+C)
 echo.
 echo ╔════════════════════════════════════════════════════════════╗
 echo ║  ✅ Servidor detenido correctamente                       ║
 echo ╚════════════════════════════════════════════════════════════╝
 echo.
-pause
+echo Cerrando ventana en 2 segundos...
+ping 127.0.0.1 -n 3 >nul
+exit
