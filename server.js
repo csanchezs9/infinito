@@ -94,10 +94,25 @@ app.get('/api/generar-catalogo', async (req, res) => {
         const html = await generarHTML(productos, nombreColeccion);
 
         // Generar PDF con Puppeteer
-        const browser = await puppeteer.launch({
+        // Configurar ruta de Chrome (portable o sistema)
+        const path = require('path');
+        const fs = require('fs');
+        const launchOptions = {
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        };
+
+        // Si existe Chrome portable en la carpeta, usarlo
+        const chromePortablePath = path.join(process.cwd(), 'chrome', 'chrome.exe');
+        if (fs.existsSync(chromePortablePath)) {
+            launchOptions.executablePath = chromePortablePath;
+            console.log('📦 Usando Chrome portable');
+        } else if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+            launchOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+            console.log('📦 Usando Chrome de variable de entorno');
+        }
+
+        const browser = await puppeteer.launch(launchOptions);
 
         const page = await browser.newPage();
         await page.setContent(html, { waitUntil: 'networkidle0' });
@@ -665,7 +680,7 @@ async function generarHTML(productos, nombreColeccion = 'PRODUCTOS') {
     `;
 }
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`
     ╔════════════════════════════════════════════════════════════╗
     ║                                                            ║
@@ -677,8 +692,20 @@ app.listen(PORT, () => {
 
     📍 Endpoints disponibles:
        GET  /api/generar-catalogo  - Generar y descargar PDF
-       GET  /api/health            - Health check
+       GET  /api/colecciones        - Obtener colecciones disponibles
+       GET  /api/health             - Health check
 
     ✨ Listo para generar catálogos creativos!
+
+    🌐 Abriendo navegador...
     `);
+
+    // Abrir el navegador automáticamente usando comando nativo de Windows
+    try {
+        const { exec } = require('child_process');
+        exec(`start http://localhost:${PORT}`);
+    } catch (error) {
+        console.error('No se pudo abrir el navegador automáticamente:', error.message);
+        console.log('👉 Abre manualmente: http://localhost:' + PORT);
+    }
 });

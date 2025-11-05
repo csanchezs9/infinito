@@ -1,15 +1,13 @@
 {
   "name": "infinito-piercing-catalog",
-  "version": "3.0.0",
+  "version": "2.2.0",
   "description": "Sistema de Catálogos Profesional - Infinito Piercing",
-  "main": "electron-main.js",
+  "main": "server.js",
+  "bin": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "electron": "electron .",
-    "electron-dev": "electron . --inspect",
-    "build": "electron-builder --win --x64",
-    "build-portable": "electron-builder --win portable"
+    "build": "pkg . --targets node18-win-x64 --output dist/InfinitoCatalogo.exe"
   },
   "keywords": [
     "pdf",
@@ -27,36 +25,13 @@
     "puppeteer": "^21.5.0"
   },
   "devDependencies": {
-    "electron": "^39.1.0",
-    "electron-builder": "^26.0.12",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pkg": "^5.8.1"
   },
-  "build": {
-    "appId": "com.infinitopiercing.catalogo",
-    "productName": "Infinito Piercing - Catálogos",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "**/*",
-      "!**/*.md",
-      "!dist"
+  "pkg": {
+    "assets": [
+      "public/**/*"
     ],
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        }
-      ],
-      "icon": "assets/icon.ico"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "Infinito Catálogos"
-    }
+    "outputPath": "dist"
   }
 }
