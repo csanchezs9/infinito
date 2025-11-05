@@ -103,6 +103,34 @@
             margin: 0 auto;
         }
 
+        .update-info {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, rgba(175, 183, 68, 0.1) 0%, rgba(175, 183, 68, 0.05) 100%);
+            border: 2px solid rgba(175, 183, 68, 0.3);
+            border-radius: 8px;
+            color: var(--color-primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Main Content */
         .content {
             background: white;
@@ -444,6 +472,9 @@
             <p class="header-description">
                 Genera catálogos PDF profesionales con productos actualizados desde tu tienda Shopify en tiempo real.
             </p>
+            <div id="updateInfo" class="update-info" style="display: none;">
+                Cargando información...
+            </div>
         </div>
 
         <!-- Main Content -->
@@ -517,22 +548,46 @@
         let categorias = {};
         let coleccionSeleccionada = null;
         let nombreColeccionSeleccionada = '';
+        let fechaActualizacion = null;
 
         // Cargar categorías al iniciar
         async function cargarCategorias() {
             try {
-                const response = await fetch('/api/colecciones');
+                // Forzar actualización desde Shopify al iniciar el programa
+                const response = await fetch('/api/colecciones?refresh=true');
                 const data = await response.json();
 
                 if (data.categorias && Object.keys(data.categorias).length > 0) {
                     categorias = data.categorias;
+                    fechaActualizacion = data.fechaActualizacion;
                     renderizarCategoriasSelect();
+                    mostrarFechaActualizacion();
                 } else {
                     mostrarError('No se encontraron categorías disponibles');
                 }
             } catch (error) {
                 console.error('Error cargando categorías:', error);
                 mostrarError('Error al cargar las categorías');
+            }
+        }
+
+        function mostrarFechaActualizacion() {
+            if (!fechaActualizacion) return;
+
+            const fecha = new Date(fechaActualizacion);
+            const opciones = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const fechaFormateada = fecha.toLocaleDateString('es-CO', opciones);
+
+            const updateInfoEl = document.getElementById('updateInfo');
+            if (updateInfoEl) {
+                updateInfoEl.textContent = `Productos actualizados: ${fechaFormateada}`;
+                updateInfoEl.style.display = 'block';
             }
         }
 

@@ -19,10 +19,16 @@ app.use(express.static('public'));
 // Endpoint para obtener todas las colecciones organizadas por categoría
 app.get('/api/colecciones', async (req, res) => {
     try {
-        // Verificar si el caché es válido
         const ahora = Date.now();
-        if (cacheColecciones && cacheTimestamp && (ahora - cacheTimestamp) < CACHE_DURATION) {
+        const forceRefresh = req.query.refresh === 'true';
+
+        // Verificar si el caché es válido (excepto si se fuerza refresh)
+        if (!forceRefresh && cacheColecciones && cacheTimestamp && (ahora - cacheTimestamp) < CACHE_DURATION) {
             return res.json(cacheColecciones);
+        }
+
+        if (forceRefresh) {
+            console.log('🔄 Forzando actualización de productos desde Shopify...');
         }
 
         // Obtener TODAS las colecciones definidas en categorias-config
@@ -60,11 +66,17 @@ app.get('/api/colecciones', async (req, res) => {
         // Organizar por categorías
         const coleccionesPorCategoria = organizarColeccionesPorCategoria(coleccionesFormateadas);
 
-        // Guardar en caché
-        cacheColecciones = { categorias: coleccionesPorCategoria };
+        // Guardar en caché con fecha de actualización
+        cacheColecciones = {
+            categorias: coleccionesPorCategoria,
+            fechaActualizacion: new Date().toISOString()
+        };
         cacheTimestamp = ahora;
 
-        res.json({ categorias: coleccionesPorCategoria });
+        res.json({
+            categorias: coleccionesPorCategoria,
+            fechaActualizacion: cacheColecciones.fechaActualizacion
+        });
     } catch (error) {
         console.error('Error obteniendo colecciones:', error);
         res.status(500).json({ error: 'Error obteniendo colecciones de la tienda' });
