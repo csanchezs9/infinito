@@ -3,9 +3,12 @@ const puppeteer = require('puppeteer');
 const cors = require('cors');
 const shopifyService = require('./shopify-service');
 const { organizarColeccionesPorCategoria, obtenerNombreColeccion } = require('./categorias-config');
+const { exec } = require('child_process');
+const util = require('util');
+const execPromise = util.promisify(exec);
 
 const app = express();
-const PORT = 3000;
+let PORT = 3000;
 
 // Caché simple para colecciones (15 minutos)
 let cacheColecciones = null;
@@ -746,6 +749,154 @@ async function generarHTML(productos, nombreColeccion = 'PRODUCTOS') {
     `;
 }
 
+// Función para matar procesos en un puerto específico (Windows)
+async function killProcessOnPort(port) {
+    try {
+        // Buscar el PID que usa el puerto
+        const { stdout } = await execPromise(`netstat -ano | findstr :${port}`);
+        const lines = stdout.split('\n');
+
+        for (const line of lines) {
+            // Buscar líneas que contengan LISTENING
+            if (line.includes('LISTENING')) {
+                const parts = line.trim().split(/\s+/);
+                const pid = parts[parts.length - 1];
+
+                if (pid && pid !== '0') {
+                    console.log(`🔍 Encontrado proceso en puerto ${port} (PID: ${pid})`);
+
+                    // Intentar matar el proceso
+                    try {
+                        await execPromise(`taskkill /F /PID ${pid}`);
+                        console.log(`✅ Proceso ${pid} cerrado exitosamente`);
+                        // Esperar un momento para que se libere el puerto
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        return true;
+                    } catch (killError) {
+                        console.log(`⚠️  No se pudo cerrar el proceso ${pid}`);
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        // No hay proceso en el puerto o error al buscar
+    }
+    return false;
+}
+
+// Función para verificar si un puerto está disponible
+async function isPortAvailable(port) {
+    return new Promise((resolve) => {
+        const net = require('net');
+        const server = net.createServer();
+
+        server.once('error', (err) => {
+            if (err.code === 'EADDRINUSE') {
+                resolve(false);
+            } else {
+                resolve(false);
+            }
+        });
+
+        server.once('listening', () => {
+            server.close();
+            resolve(true);
+        });
+
+        server.listen(port, '0.0.0.0');
+    });
+}
+
+// Función para encontrar un puerto disponible
+async function findAvailablePort(startPort, maxAttempts = 5) {
+    for (let i = 0; i < maxAttempts; i++) {
+        const port = startPort + i;
+        console.log(`🔍 Verificando puerto ${port}...`);
+
+        const available = await isPortAvailable(port);
+        if (available) {
+            console.log(`✅ Puerto ${port} está disponible`);
+            return port;
+        } else {
+            console.log(`⚠️  Puerto ${port} está ocupado`);
+
+            // Intentar matar el proceso en el primer intento (puerto preferido)
+            if (i === 0) {
+                console.log(`🔧 Intentando cerrar procesos anteriores en puerto ${port}...`);
+                const killed = await killProcessOnPort(port);
+                if (killed) {
+                    // Verificar de nuevo si está disponible
+                    const nowAvailable = await isPortAvailable(port);
+                    if (nowAvailable) {
+                        console.log(`✅ Puerto ${port} liberado y disponible`);
+                        return port;
+                    }
+                }
+            }
+        }
+    }
+
+    throw new Error(`No se pudo encontrar un puerto disponible después de ${maxAttempts} intentos`);
+}
+
+// Iniciar el servidor con manejo robusto de puertos
+async function startServer() {
+    try {
+        // Buscar puerto disponible
+        PORT = await findAvailablePort(3000, 5);
+
+        app.listen(PORT, async () => {
+            console.log(`
+    ╔════════════════════════════════════════════════════════════╗
+    ║                                                            ║
+    ║     ∞  INFINITO PIERCING - SERVICIO DE CATÁLOGO PDF       ║
+    ║                                                            ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    🚀 Servidor corriendo en: http://localhost:${PORT}
+
+    📍 Endpoints disponibles:
+       GET  /api/generar-catalogo  - Generar y descargar PDF
+       GET  /api/colecciones        - Obtener colecciones disponibles
+       GET  /api/health             - Health check
+
+    ✨ Listo para generar catálogos creativos!
+
+    🌐 Abriendo navegador...
+
+    ⚠️  IMPORTANTE: Para detener el servidor, presiona Ctrl+C
+    `);
+
+            // Abrir el navegador automáticamente usando comando nativo de Windows
+            try {
+                exec(`start http://localhost:${PORT}`);
+            } catch (error) {
+                console.error('No se pudo abrir el navegador automáticamente:', error.message);
+                console.log('👉 Abre manualmente: http://localhost:' + PORT);
+            }
+        });
+    } catch (error) {
+        console.error(`
+    ╔════════════════════════════════════════════════════════════╗
+    ║                                                            ║
+    ║     ❌ ERROR: No se pudo iniciar el servidor               ║
+    ║                                                            ║
+    ║     ${error.message.padEnd(56)}║
+    ║                                                            ║
+    ║     Por favor, cierra otras aplicaciones que puedan       ║
+    ║     estar usando los puertos 3000-3004 e intenta de nuevo ║
+    ║                                                            ║
+    ╚════════════════════════════════════════════════════════════╝
+        `);
+        process.exit(1);
+    }
+}
+
+// Iniciar el servidor
+startServer();
+
+// Código antiguo comentado - ahora se usa startServer()
+/*
 app.listen(PORT, async () => {
     console.log(`
     ╔════════════════════════════════════════════════════════════╗
@@ -777,6 +928,7 @@ app.listen(PORT, async () => {
         console.log('👉 Abre manualmente: http://localhost:' + PORT);
     }
 });
+*/
 
 // Handler para cerrar el servidor correctamente con Ctrl+C
 process.on('SIGINT', () => {

@@ -16,30 +16,55 @@ echo Creando acceso directo en el escritorio...
 powershell -ExecutionPolicy Bypass -WindowStyle Hidden -Command "& {$Desktop = [Environment]::GetFolderPath('Desktop'); if ([string]::IsNullOrEmpty($Desktop)) { $Desktop = \"$env:USERPROFILE\Desktop\" }; if (-not (Test-Path $Desktop) -and (Test-Path \"$env:OneDrive\Desktop\")) { $Desktop = \"$env:OneDrive\Desktop\" }; try { if (-not (Test-Path $Desktop)) { New-Item -ItemType Directory -Path $Desktop -Force | Out-Null }; $WS = New-Object -ComObject WScript.Shell; $SC = $WS.CreateShortcut(\"$Desktop\Infinito Catalogos.lnk\"); $SC.TargetPath = '%~dp0INICIAR.bat'; $SC.WorkingDirectory = '%~dp0'; $SC.Description = 'Infinito Piercing - Sistema de Catalogos'; if (Test-Path '%~dp0assets\icon.ico') { $SC.IconLocation = '%~dp0assets\icon.ico' }; $SC.Save(); Write-Host '✅ Acceso directo creado en el escritorio' -ForegroundColor Green } catch { Write-Host '⚠️ No se pudo crear el acceso directo (esto es normal)' -ForegroundColor Yellow } }"
 echo.
 
-echo Iniciando servidor...
+echo Iniciando aplicacion...
 echo.
 echo ✅ El servidor se cerrara automaticamente cuando cierres el navegador
 echo    (o puedes cerrar esta ventana CMD manualmente)
 echo.
 
-:: Iniciar Node.js
-node server.js
+:: Intentar ejecutar el .exe primero (versión portable)
+if exist "%~dp0InfinitoCatalogo.exe" (
+    echo 📦 Ejecutando version portable (InfinitoCatalogo.exe)...
+    echo.
+    "%~dp0InfinitoCatalogo.exe"
+    goto :fin
+)
 
-:: Si Node.js no está instalado, mostrar error
+:: Si no existe el .exe, intentar con dist\InfinitoCatalogo.exe
+if exist "%~dp0dist\InfinitoCatalogo.exe" (
+    echo 📦 Ejecutando desde carpeta dist...
+    echo.
+    "%~dp0dist\InfinitoCatalogo.exe"
+    goto :fin
+)
+
+:: Si no existe el .exe, intentar con Node.js
+echo 💻 Ejecutando con Node.js...
+echo.
+node "%~dp0server.js"
+
+:: Si Node.js falló, mostrar error
 if errorlevel 1 (
     echo.
     echo ╔════════════════════════════════════════════════════════════╗
-    echo ║  ⚠️  ERROR: Node.js no está instalado                     ║
+    echo ║  ⚠️  ERROR: No se encontro InfinitoCatalogo.exe            ║
+    echo ║             ni Node.js instalado                           ║
     echo ║                                                            ║
-    echo ║  📥 Descarga Node.js desde:                               ║
+    echo ║  📥 Opciones:                                              ║
+    echo ║                                                            ║
+    echo ║  1. Asegurate de extraer TODOS los archivos del ZIP       ║
+    echo ║     incluyendo InfinitoCatalogo.exe                        ║
+    echo ║                                                            ║
+    echo ║  2. O instala Node.js desde:                              ║
     echo ║     https://nodejs.org                                    ║
     echo ║                                                            ║
-    echo ║  O usa el ejecutable .exe si está disponible              ║
     echo ╚════════════════════════════════════════════════════════════╝
     echo.
     pause
     exit
 )
+
+:fin
 
 :: Cuando el servidor se cierra (Ctrl+C)
 echo.

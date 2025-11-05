@@ -35,5 +35,5 @@ __pycache__/
 
 # Build output
 dist/
-release-v2.2.0/
+release-*/
 *.zip
