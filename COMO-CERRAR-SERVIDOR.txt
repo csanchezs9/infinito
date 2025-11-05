@@ -1,0 +1,125 @@
+═══════════════════════════════════════════════════════════════════
+  ✅ CIERRE AUTOMÁTICO DEL SERVIDOR
+═══════════════════════════════════════════════════════════════════
+
+✅ BUENAS NOTICIAS: ¡El servidor se cierra automáticamente!
+
+A partir de esta versión, cuando cierras la pestaña del navegador,
+el servidor se detiene AUTOMÁTICAMENTE en menos de 1 segundo.
+
+Ya NO necesitas preocuparte por cerrar manualmente el servidor.
+
+═══════════════════════════════════════════════════════════════════
+  ✅ CÓMO CERRAR LA APLICACIÓN:
+═══════════════════════════════════════════════════════════════════
+
+OPCIÓN 1 (La más fácil - RECOMENDADA):
+  1. Cierra la pestaña del navegador (localhost:3000)
+  2. El servidor se cerrará automáticamente en 1 segundo
+  3. ¡Listo! No necesitas hacer nada más
+
+OPCIÓN 2 (Cerrar manualmente):
+  1. Ve a la ventana de CMD (fondo negro con texto)
+  2. Presiona Ctrl+C o cierra la ventana directamente
+  3. El servidor se detendrá inmediatamente
+
+OPCIÓN 3 (Si algo falla o no ves la ventana de CMD):
+  1. Abre el Administrador de Tareas (Ctrl+Shift+Esc)
+  2. Busca "node.exe" o "InfinitoCatalogo.exe"
+  3. Click derecho → Finalizar tarea
+
+═══════════════════════════════════════════════════════════════════
+  🔧 CÓMO FUNCIONA EL CIERRE AUTOMÁTICO:
+═══════════════════════════════════════════════════════════════════
+
+La aplicación ahora incluye un sistema inteligente de detección:
+
+✅ Mientras el navegador está abierto:
+  - La página envía señales al servidor cada 2 segundos
+  - El servidor sabe que la aplicación está en uso
+
+✅ Cuando cierras el navegador:
+  - La página envía una señal de cierre inmediata
+  - El servidor se detiene automáticamente en menos de 1 segundo
+
+✅ Si algo falla (backup):
+  - Si el servidor deja de recibir señales por más de 5 segundos
+  - Se cierra automáticamente como medida de seguridad
+
+═══════════════════════════════════════════════════════════════════
+  ✅ VENTAJAS DEL CIERRE AUTOMÁTICO:
+═══════════════════════════════════════════════════════════════════
+
+✅ FÁCIL DE USAR
+  - No necesitas recordar cerrar la ventana de CMD
+  - Simplemente cierra el navegador como cualquier otra app
+
+✅ EVITA PROBLEMAS
+  - No habrá servidores "zombies" corriendo en segundo plano
+  - No habrá conflictos de puerto si reincias la app
+  - No consumirá recursos del sistema innecesariamente
+
+✅ PROFESIONAL
+  - Funciona como cualquier aplicación moderna
+  - El usuario no necesita ser técnico para usarla
+
+═══════════════════════════════════════════════════════════════════
+  ✅ COMPORTAMIENTO ESPERADO:
+═══════════════════════════════════════════════════════════════════
+
+✅ ABRIR LA APLICACIÓN:
+  1. Doble clic en INICIAR.bat o InfinitoCatalogo.exe
+  2. Se abre la ventana de CMD (puede estar visible o no)
+  3. Se abre el navegador automáticamente en localhost:3000
+
+✅ USAR LA APLICACIÓN:
+  1. Selecciona categoría y colección
+  2. Genera tus catálogos PDF
+  3. Descarga los archivos
+
+✅ CERRAR LA APLICACIÓN:
+  1. Cierra la pestaña del navegador
+  2. Espera 1 segundo
+  3. El servidor se cierra automáticamente
+  4. ¡Listo!
+
+═══════════════════════════════════════════════════════════════════
+  ❓ PREGUNTAS FRECUENTES:
+═══════════════════════════════════════════════════════════════════
+
+❓ ¿Qué pasa si no veo la ventana de CMD?
+  → No te preocupes, el servidor se cierra automáticamente
+  → Cuando cierres el navegador, todo se detendrá solo
+
+❓ ¿Puedo minimizar la ventana de CMD?
+  → Sí, puedes minimizarla o incluso ocultarla
+  → El cierre automático funciona igual
+
+❓ ¿Qué pasa si se crashea el navegador?
+  → El servidor detectará que no recibe señales
+  → Después de 5 segundos, se cerrará automáticamente
+
+❓ ¿Qué pasa si cambio de pestaña en el navegador?
+  → Nada, el servidor sigue corriendo normalmente
+  → Solo se cierra cuando CIERRAS la pestaña completamente
+
+❓ ¿Funciona si ejecuto desde USB?
+  → Sí, funciona igual desde cualquier ubicación
+
+❓ ¿Qué pasa si reinicio la aplicación rápidamente?
+  → El servidor anterior se cierra automáticamente
+  → El nuevo servidor inicia sin problemas
+  → No habrá conflictos de puerto
+
+═══════════════════════════════════════════════════════════════════
+  🎯 RESUMEN:
+═══════════════════════════════════════════════════════════════════
+
+1. ABRIR:  Doble clic en INICIAR.bat o InfinitoCatalogo.exe
+2. USAR:   Trabaja normalmente en el navegador
+3. CERRAR: Cierra la pestaña del navegador → El servidor se cierra solo
+
+🎉 ¡Es así de simple! Ya no necesitas preocuparte por cerrar
+   manualmente el servidor.
+
+═══════════════════════════════════════════════════════════════════

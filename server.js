@@ -12,9 +12,49 @@ let cacheColecciones = null;
 let cacheTimestamp = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutos
 
+// Sistema de heartbeat para cerrar el servidor cuando se cierra el navegador
+let ultimoHeartbeat = null; // null = aún no se ha conectado ningún cliente
+let clienteConectado = false;
+const HEARTBEAT_TIMEOUT = 3000; // 3 segundos sin heartbeat = cerrar servidor
+
+// Verificar cada 500ms si el navegador sigue activo (muy agresivo)
+const heartbeatInterval = setInterval(() => {
+    // Solo verificar si ya hubo al menos un cliente conectado
+    if (clienteConectado && ultimoHeartbeat) {
+        const tiempoSinHeartbeat = Date.now() - ultimoHeartbeat;
+        if (tiempoSinHeartbeat > HEARTBEAT_TIMEOUT) {
+            console.log('\n⚠️  Navegador cerrado - Deteniendo servidor automáticamente...\n');
+            clearInterval(heartbeatInterval);
+            process.exit(0);
+        }
+    }
+}, 500);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+
+// Endpoint para recibir heartbeat del navegador
+app.post('/api/heartbeat', (req, res) => {
+    if (!clienteConectado) {
+        clienteConectado = true;
+        console.log('✅ Cliente conectado - Sistema de cierre automático activado');
+    }
+    ultimoHeartbeat = Date.now();
+    res.json({ ok: true });
+});
+
+// Endpoint para cerrar el servidor cuando se cierra la pestaña del navegador
+app.post('/api/shutdown', (req, res) => {
+    console.log('\n🛑 Navegador cerrado - Deteniendo servidor...\n');
+    res.json({ ok: true });
+
+    // Cierre inmediato (100ms para que llegue la respuesta)
+    setTimeout(() => {
+        clearInterval(heartbeatInterval);
+        process.exit(0);
+    }, 100);
+});
 
 // Endpoint para obtener todas las colecciones organizadas por categoría
 app.get('/api/colecciones', async (req, res) => {
@@ -127,7 +167,21 @@ app.get('/api/generar-catalogo', async (req, res) => {
         const browser = await puppeteer.launch(launchOptions);
 
         const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: 'networkidle0' });
+
+        // Sin límite de timeout - esperar todo el tiempo necesario (hasta 10 minutos)
+        page.setDefaultNavigationTimeout(600000); // 10 minutos
+        page.setDefaultTimeout(600000); // 10 minutos
+
+        console.log('⏳ Cargando contenido HTML y esperando TODAS las imágenes...');
+        console.log('   (Esto puede tomar varios minutos con catálogos grandes)');
+
+        // Usar 'networkidle0' para esperar a que TODAS las imágenes carguen
+        await page.setContent(html, {
+            waitUntil: 'networkidle0',
+            timeout: 600000 // 10 minutos máximo
+        });
+
+        console.log('✅ Todas las imágenes cargadas. Generando PDF...');
 
         const pdfBuffer = await page.pdf({
             format: 'A4',
@@ -710,6 +764,8 @@ app.listen(PORT, async () => {
     ✨ Listo para generar catálogos creativos!
 
     🌐 Abriendo navegador...
+
+    ⚠️  IMPORTANTE: Para detener el servidor, presiona Ctrl+C
     `);
 
     // Abrir el navegador automáticamente usando comando nativo de Windows
@@ -720,4 +776,27 @@ app.listen(PORT, async () => {
         console.error('No se pudo abrir el navegador automáticamente:', error.message);
         console.log('👉 Abre manualmente: http://localhost:' + PORT);
     }
+});
+
+// Handler para cerrar el servidor correctamente con Ctrl+C
+process.on('SIGINT', () => {
+    console.log(`
+    ╔════════════════════════════════════════════════════════════╗
+    ║                                                            ║
+    ║     🛑 Deteniendo servidor...                             ║
+    ║                                                            ║
+    ╚════════════════════════════════════════════════════════════╝
+    `);
+    process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+    console.log(`
+    ╔════════════════════════════════════════════════════════════╗
+    ║                                                            ║
+    ║     🛑 Servidor detenido                                  ║
+    ║                                                            ║
+    ╚════════════════════════════════════════════════════════════╝
+    `);
+    process.exit(0);
 });

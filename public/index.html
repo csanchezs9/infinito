@@ -718,6 +718,29 @@
 
         // Cargar categorías al inicio
         cargarCategorias();
+
+        // ============================================
+        // SISTEMA DE CIERRE AUTOMÁTICO DEL SERVIDOR
+        // ============================================
+
+        // Enviar heartbeat cada 1 segundo para mantener el servidor activo
+        // Si el navegador se cierra, el servidor detectará la falta de heartbeats
+        // y se cerrará automáticamente después de 3 segundos
+        setInterval(() => {
+            fetch('/api/heartbeat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).catch(() => {}); // Ignorar errores silenciosamente
+        }, 1000);
+
+        // Intentar cerrar inmediatamente cuando se cierra la pestaña
+        // (puede fallar en algunos navegadores, por eso confiamos en el timeout)
+        window.addEventListener('beforeunload', () => {
+            navigator.sendBeacon('/api/shutdown');
+        });
+
+        // Backup garantizado: Si el beforeunload falla, el servidor se cerrará
+        // automáticamente después de 3 segundos sin recibir heartbeats
     </script>
 </body>
 </html>
