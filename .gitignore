@@ -32,3 +32,8 @@ __pycache__/
 
 # Claude
 .claude/
+
+# Build output
+dist/
+release-v2.2.0/
+*.zip
