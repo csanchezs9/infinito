@@ -1,6 +1,6 @@
 {
   "name": "infinito-piercing-catalog",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Sistema de Catálogos Profesional - Infinito Piercing",
   "main": "server.js",
   "bin": "server.js",
