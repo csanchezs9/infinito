@@ -895,41 +895,6 @@ async function startServer() {
 // Iniciar el servidor
 startServer();
 
-// Código antiguo comentado - ahora se usa startServer()
-/*
-app.listen(PORT, async () => {
-    console.log(`
-    ╔════════════════════════════════════════════════════════════╗
-    ║                                                            ║
-    ║     ∞  INFINITO PIERCING - SERVICIO DE CATÁLOGO PDF       ║
-    ║                                                            ║
-    ╚════════════════════════════════════════════════════════════╝
-
-    🚀 Servidor corriendo en: http://localhost:${PORT}
-
-    📍 Endpoints disponibles:
-       GET  /api/generar-catalogo  - Generar y descargar PDF
-       GET  /api/colecciones        - Obtener colecciones disponibles
-       GET  /api/health             - Health check
-
-    ✨ Listo para generar catálogos creativos!
-
-    🌐 Abriendo navegador...
-
-    ⚠️  IMPORTANTE: Para detener el servidor, presiona Ctrl+C
-    `);
-
-    // Abrir el navegador automáticamente usando comando nativo de Windows
-    try {
-        const { exec } = require('child_process');
-        exec(`start http://localhost:${PORT}`);
-    } catch (error) {
-        console.error('No se pudo abrir el navegador automáticamente:', error.message);
-        console.log('👉 Abre manualmente: http://localhost:' + PORT);
-    }
-});
-*/
-
 // Handler para cerrar el servidor correctamente con Ctrl+C
 process.on('SIGINT', () => {
     console.log(`
